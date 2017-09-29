@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<head th:replace="common/head" />
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" action="/user/doAdd">
+        <div class="layui-form-item">
+            <label for="L_title" class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" id="L_title" name="userName" lay-verify="required" placeholder="请输入用户名"
+                autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label  class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" id="password" name="password" lay-verify="required" placeholder="请输入密码"
+                autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">重复密码</label>
+            <div class="layui-input-block">
+                <input type="password"  name="confPassword" lay-verify="required|eqPwd" placeholder="重复输入密码"
+                autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" pane>
+   <label class="layui-form-label">状态</label>
+   <div class="layui-input-block">
+     <input type="radio" name="userState" value="1" title="启用" checked="checked">
+     <input type="radio" name="userState" value="0" title="禁止" >
+   </div>
+ </div>
+<div class="layui-form-item layui-form-text">
+   <label class="layui-form-label">描述</label>
+   <div class="layui-input-block">
+     <textarea name="userDesc" placeholder="请输入描述"  class="layui-textarea"></textarea>
+  </div>
+</div>
+  <div class="layui-form-item">
+  	<div class="layui-input-block">
+    		<button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+    		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+  	</div>
+</div>
+    </form>
+</div>
+<div th:replace="common/js"></div>
+<div th:replace="common/setting"></div>
+<script type="text/javascript">
+	layui.use('xform');
+</script>
+</body>
+</html>
