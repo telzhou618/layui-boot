@@ -58,6 +58,6 @@ layui.define(['element'], function(exports){
       	$('.layui-tab-title li').eq(0).find('i').remove();
       	window.location.hash=url;
     });
-  	
+    
     exports('xadmin', {}); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 });    
