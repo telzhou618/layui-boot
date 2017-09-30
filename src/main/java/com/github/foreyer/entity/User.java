@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class User implements Serializable{
 
@@ -29,6 +31,7 @@ public class User implements Serializable{
 	@Column(nullable = false)
 	private Integer userState;
 	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm") //输出日期格式化
 	private Date createTime;
 	
 	@Column(length=300)
