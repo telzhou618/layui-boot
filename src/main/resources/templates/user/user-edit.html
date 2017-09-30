@@ -29,19 +29,18 @@
                  autocomplete="off" class="layui-input">
              </div>
          </div>
-          <div class="layui-form-item" pane>
-   <label class="layui-form-label">状态</label>
-   <div class="layui-input-block">
-     <input type="radio" name="userState" value="1" title="启用" th:checked="${user.userState}">
-     <input type="radio" name="userState" value="0" title="禁止" th:checked="${user.userState}">
-   </div>
- </div>
- <div class="layui-form-item">
-   <label class="layui-form-label">描述</label>
-   <div class="layui-input-block">
-     <textarea name="userDesc" placeholder="请输入描述"  class="layui-textarea" th:text="${user.userDesc}"></textarea>
-  </div>
-</div>
+       <div class="layui-form-item">
+	    <label class="layui-form-label">状态</label>
+	    <div class="layui-input-block">
+	      <input type="checkbox" name="userState" lay-skin="switch" value="1" lay-text="启用|禁止" th:checked="${user.userState}">
+	    </div>
+	  </div>
+	 <div class="layui-form-item">
+	   <label class="layui-form-label">描述</label>
+	   <div class="layui-input-block">
+	     <textarea name="userDesc" placeholder="请输入描述"  class="layui-textarea" th:text="${user.userDesc}"></textarea>
+	  </div>
+	</div>
   <div class="layui-form-item">
   <div class="layui-input-block">
     <button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>

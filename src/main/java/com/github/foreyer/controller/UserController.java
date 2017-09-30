@@ -30,9 +30,10 @@ public class UserController {
 	@ResponseBody
 	public Rest json(
 			@RequestParam(value="page",defaultValue="1") Integer page,
-			@RequestParam(value="limit",defaultValue="10") Integer size){
-	
-		Page<User> pageData = userService.page(page, size);
+			@RequestParam(value="limit",defaultValue="10") Integer size,
+			User user
+			){
+		Page<User> pageData = userService.page(page, size,user);
 	    return Rest.okCountData(pageData.getTotalElements(), pageData.getContent());
 	}
 	
@@ -76,6 +77,9 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/doEdit")
 	public Rest doEdit(User submitUser){
+		if(submitUser.getUserState() == null){
+			submitUser.setUserState(0);
+		}
 		userService.updateById(submitUser, submitUser.getId());
 		return Rest.ok();
 	}

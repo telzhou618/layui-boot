@@ -61,7 +61,7 @@ layui.define(['layer','form','upload'], function(exports){
 		var $ch = $("input:checkbox:checked");
 		var name = {};
 		var chvs = [];
-		if($ch && $ch[0]){
+		if($ch && $ch[0] && !$ch.attr('lay-skin')){
 			name = $ch[0].name;
 			$ch.each(function() {
 				chvs.push($(this).val());

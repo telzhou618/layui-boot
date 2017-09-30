@@ -27,9 +27,9 @@ public class User implements Serializable{
 	private String password;
 	
 	@Column(nullable = false)
-	private Integer userState = 1;
+	private Integer userState;
 	
-	private Date createTime = new Date();
+	private Date createTime;
 	
 	@Column(length=300)
 	private String userDesc;

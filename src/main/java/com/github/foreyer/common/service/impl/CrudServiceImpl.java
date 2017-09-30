@@ -17,7 +17,7 @@ import org.thymeleaf.util.ArrayUtils;
 import com.github.foreyer.common.service.CrudService;
 
 /**
- *  基础CRUD service
+ *  Layui service 实现
  * @author jameszhou
  *
  * @param <R>	持久化对象
@@ -49,7 +49,10 @@ public abstract class CrudServiceImpl<R extends JpaRepository<T, ID>, T, ID exte
 			}
 			 Object value;
 			try {
-				value = PropertyUtils.getProperty(t, name);
+				value = PropertyUtils.getProperty(t, name); //传入的值若果为 null 或 ""则不更新
+				if(value == null || value.equals("")){
+					continue;
+				}
 				PropertyUtils.setProperty(rt, name,value);
 			} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 				// TODO Auto-generated catch block
