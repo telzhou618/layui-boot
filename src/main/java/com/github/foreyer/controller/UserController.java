@@ -1,5 +1,7 @@
 package com.github.foreyer.controller;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,10 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/doAdd")
 	public Rest doAdd(User user,String confPassword){
+		user.setCreateTime(new Date());
+		if(user.getUserState() == null){
+			user.setUserState(0);
+		}
 		if(!confPassword.equals(user.getPassword())){
 			return Rest.failure("两次输入的密码不一致");
 		}
