@@ -9,8 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-@Entity
+/**
+ * 用户
+ * @author jameszhou
+ *
+ */
+@Entity(name="sys_user")
 public class User implements Serializable{
 
 	/**
@@ -36,7 +40,6 @@ public class User implements Serializable{
 	
 	@Column(length=300)
 	private String userDesc;
-
 
 	public Long getId() {
 		return id;
