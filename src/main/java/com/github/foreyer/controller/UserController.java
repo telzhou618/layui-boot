@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.transaction.Transactional;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.thymeleaf.util.ArrayUtils;
 import com.github.foreyer.common.bean.Rest;
 import com.github.foreyer.entity.User;
 import com.github.foreyer.service.IUserService;
+import com.github.foreyer.util.ShiroUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -54,6 +56,7 @@ public class UserController {
 		if(!confPassword.equals(user.getPassword())){
 			return Rest.failure("两次输入的密码不一致");
 		}
+		user.setPassword(ShiroUtil.md51024Pwd(user.getPassword(), user.getUserName()));
 		userService.save(user);
 		return Rest.ok();
 	}
@@ -74,6 +77,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/edit")
+	@RequiresPermissions("usupdate")
 	public String edit(Long id,Model model){
 		model.addAttribute("user", userService.findOne(id));
 		return "user/user-edit";

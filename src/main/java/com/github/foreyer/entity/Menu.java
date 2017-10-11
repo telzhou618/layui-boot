@@ -125,6 +125,23 @@ public class Menu implements Serializable{
 	public void setDeep(Integer deep) {
 		this.deep = deep;
 	}
+
+	public Menu() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Menu(Long id, String text, String uri, String resource, Long pid, String icon, Integer sort, Integer deep) {
+		super();
+		this.id = id;
+		this.text = text;
+		this.uri = uri;
+		this.resource = resource;
+		this.pid = pid;
+		this.icon = icon;
+		this.sort = sort;
+		this.deep = deep;
+	}
 	
 	
 }

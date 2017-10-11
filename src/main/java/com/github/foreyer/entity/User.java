@@ -2,11 +2,17 @@ package com.github.foreyer.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 /**
@@ -41,6 +47,28 @@ public class User implements Serializable{
 	@Column(length=300)
 	private String userDesc;
 
+	/**
+	 * 角色
+	 */
+	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.PERSIST,CascadeType.MERGE})  
+    @JoinTable(name="sys_user_role",  
+    joinColumns={@JoinColumn(name="user_id",referencedColumnName="id") },    
+      inverseJoinColumns={ @JoinColumn(name="role_id",referencedColumnName="id")    
+       }    
+    )    
+	private Set<Role> roles = new HashSet<Role>();
+	
+	/**
+	 * 权限
+	 */
+	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.PERSIST,CascadeType.MERGE})  
+    @JoinTable(name="sys_user_menu",  
+    joinColumns={@JoinColumn(name="user_id",referencedColumnName="id") },    
+      inverseJoinColumns={ @JoinColumn(name="menu_id",referencedColumnName="id")    
+       }    
+    )  
+	private Set<Menu> menus = new HashSet<Menu>();
+	
 	public Long getId() {
 		return id;
 	}
@@ -94,11 +122,40 @@ public class User implements Serializable{
 		super();
 		this.id = id;
 	}
+	
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
+	public Set<Menu> getMenus() {
+		return menus;
+	}
+
+	public void setMenus(Set<Menu> menus) {
+		this.menus = menus;
+	}
 
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
-	}	
-	
+	}
+
+	public User(Long id, String userName, String password, Integer userState, Date createTime, String userDesc,
+			Set<Role> roles, Set<Menu> menus) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.userState = userState;
+		this.createTime = createTime;
+		this.userDesc = userDesc;
+		this.roles = roles;
+		this.menus = menus;
+	}
 	
 }
