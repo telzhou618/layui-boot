@@ -33,11 +33,19 @@
 	      <input type="checkbox" name="userState" lay-skin="switch" value="1" lay-text="启用|禁止">
 	    </div>
 	  </div>
-<div class="layui-form-item layui-form-text">
-   <label class="layui-form-label">描述</label>
-   <div class="layui-input-block">
-     <textarea name="userDesc" placeholder="请输入描述"  class="layui-textarea"></textarea>
-  </div>
+	  <div class="layui-form-item" pane>
+	    <label class="layui-form-label">角色</label>
+	    <div class="layui-input-block">
+	    	<span th:each="role:${roleList}">
+	      		<input type="checkbox" name="roleId" th:value="${role.id}">&nbsp;<span th:text="${role.roleName}"></span> 
+	    	</span>
+	    </div>
+	  </div>
+	<div class="layui-form-item layui-form-text">
+	   <label class="layui-form-label">描述</label>
+	   <div class="layui-input-block">
+	     <textarea name="userDesc" placeholder="请输入描述"  class="layui-textarea"></textarea>
+	  </div>
 </div>
   <div class="layui-form-item">
   	<div class="layui-input-block">

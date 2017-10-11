@@ -1,6 +1,7 @@
 package com.github.foreyer.common.service.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -55,4 +56,13 @@ public abstract class LayuiServiceImpl<R extends JpaRepository<T, ID>, T, ID ext
 		return r.findAll(example, pageable);
 	}
 
+	@Override
+	public List<T> findByExample(T t) {
+		// TODO Auto-generated method stub
+		
+		Example<T> example = Example.of(t);
+		return r.findAll(example);
+	}
+
+	
 }

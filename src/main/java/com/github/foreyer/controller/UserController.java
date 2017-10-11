@@ -2,7 +2,6 @@ package com.github.foreyer.controller;
 
 import java.util.Date;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.ArrayUtils;
 
 import com.github.foreyer.common.bean.Rest;
+import com.github.foreyer.constant.RoleState;
 import com.github.foreyer.constant.UserState;
+import com.github.foreyer.entity.Role;
 import com.github.foreyer.entity.User;
+import com.github.foreyer.service.IRoleService;
 import com.github.foreyer.service.IUserService;
 import com.github.foreyer.util.ShiroUtil;
 
@@ -23,6 +25,7 @@ import com.github.foreyer.util.ShiroUtil;
 public class UserController {
 
 	@Autowired private IUserService userService;
+	@Autowired private IRoleService roleService;
 	
 	@RequestMapping({"","/","/list"})
 	public String index(){
@@ -41,7 +44,11 @@ public class UserController {
 	}
 	
 	@RequestMapping("/add")
-	public String add(){
+	public String add(Model model){
+		
+		Role role = new Role();
+		role.setRoleState(RoleState.ON.getState());
+		model.addAttribute("roleList", roleService.findByExample(role));
 		return "user/user-add";
 	}
 	
@@ -72,12 +79,10 @@ public class UserController {
 			return Rest.failure("客户端传入对象id为空");
 		}
 		userService.delete(ids);
-		System.out.println(1/0);
 		return Rest.ok();
 	}
 	
 	@RequestMapping("/edit")
-	@RequiresPermissions("user:update")
 	public String edit(Long id,Model model){
 		model.addAttribute("user", userService.findOne(id));
 		return "user/user-edit";
