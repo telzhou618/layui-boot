@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<head th:replace="common/head" />
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" action="/role/doAdd">
+        <div class="layui-form-item">
+            <label  class="layui-form-label">角色名称</label>
+            <div class="layui-input-block">
+                <input type="text"  name="roleName" lay-verify="required" placeholder="请输入角色名称"
+                autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label  class="layui-form-label">角色标识</label>
+            <div class="layui-input-block">
+                <input type="text"  name="resource" lay-verify="required" placeholder="请输入角色标识"
+                autocomplete="off" class="layui-input">
+            </div>
+        </div>
+         <div class="layui-form-item" pane>
+	    <label class="layui-form-label">状态</label>
+	    <div class="layui-input-block">
+	      <input type="checkbox" name="roleState" lay-skin="switch" value="1" lay-text="启用|禁止">
+	    </div>
+	  </div>
+<div class="layui-form-item layui-form-text">
+   <label class="layui-form-label">描述</label>
+   <div class="layui-input-block">
+     <textarea name="roleDesc" placeholder="请输入描述"  class="layui-textarea"></textarea>
+  </div>
+</div>
+  <div class="layui-form-item">
+  	<div class="layui-input-block">
+    		<button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+    		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+  	</div>
+</div>
+    </form>
+</div>
+<div th:replace="common/js"></div>
+<div th:replace="common/setting"></div>
+<script type="text/javascript">
+	layui.use('xform');
+</script>
+</body>
+</html>

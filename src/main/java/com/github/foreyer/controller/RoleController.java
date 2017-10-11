@@ -1,8 +1,5 @@
 package com.github.foreyer.controller;
 
-import java.util.Date;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -13,20 +10,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.ArrayUtils;
 
 import com.github.foreyer.common.bean.Rest;
-import com.github.foreyer.constant.UserState;
-import com.github.foreyer.entity.User;
-import com.github.foreyer.service.IUserService;
-import com.github.foreyer.util.ShiroUtil;
+import com.github.foreyer.constant.RoleState;
+import com.github.foreyer.entity.Role;
+import com.github.foreyer.service.IRoleService;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/role")
+public class RoleController {
 
-	@Autowired private IUserService userService;
+	@Autowired private IRoleService roleService;
 	
 	@RequestMapping({"","/","/list"})
 	public String index(){
-		return "user/user-list";
+		return "role/role-list";
 	}
 
 	@RequestMapping("/json")
@@ -34,29 +30,24 @@ public class UserController {
 	public Rest json(
 			@RequestParam(value="page",defaultValue="1") Integer page,
 			@RequestParam(value="limit",defaultValue="10") Integer size,
-			User user
+			Role role
 			){
-		Page<User> pageData = userService.page(page, size,user);
+		Page<Role> pageData = roleService.page(page, size,role);
 	    return Rest.okCountData(pageData.getTotalElements(), pageData.getContent());
 	}
 	
 	@RequestMapping("/add")
 	public String add(){
-		return "user/user-add";
+		return "role/role-add";
 	}
 	
 	@ResponseBody
 	@RequestMapping("/doAdd")
-	public Rest doAdd(User user,String confPassword){
-		user.setCreateTime(new Date());
-		if(user.getUserState() == null){
-			user.setUserState(UserState.OFF.getState());
+	public Rest doAdd(Role role){
+		if(role.getRoleState() == null){
+			role.setRoleState(RoleState.OFF.getState());
 		}
-		if(!confPassword.equals(user.getPassword())){
-			return Rest.failure("两次输入的密码不一致");
-		}
-		user.setPassword(ShiroUtil.md51024Pwd(user.getPassword(), user.getUserName()));
-		userService.save(user);
+		roleService.save(role);
 		return Rest.ok();
 	}
 	
@@ -71,24 +62,23 @@ public class UserController {
 		if(ArrayUtils.isEmpty(ids)){
 			return Rest.failure("客户端传入对象id为空");
 		}
-		userService.delete(ids);
+		roleService.delete(ids);
 		return Rest.ok();
 	}
 	
 	@RequestMapping("/edit")
-	@RequiresPermissions("user:update")
 	public String edit(Long id,Model model){
-		model.addAttribute("user", userService.findOne(id));
-		return "user/user-edit";
+		model.addAttribute("role", roleService.findOne(id));
+		return "role/role-edit";
 	}
 	
 	@ResponseBody
 	@RequestMapping("/doEdit")
-	public Rest doEdit(User submitUser){
-		if(submitUser.getUserState() == null){
-			submitUser.setUserState(0);
+	public Rest doEdit(Role submitRole){
+		if(submitRole.getRoleState() == null){
+			submitRole.setRoleState(RoleState.OFF.getState());
 		}
-		userService.updateById(submitUser, submitUser.getId());
+		roleService.updateById(submitRole, submitRole.getId());
 		return Rest.ok();
 	}
 }
