@@ -72,6 +72,7 @@ public class UserController {
 			return Rest.failure("客户端传入对象id为空");
 		}
 		userService.delete(ids);
+		System.out.println(1/0);
 		return Rest.ok();
 	}
 	
