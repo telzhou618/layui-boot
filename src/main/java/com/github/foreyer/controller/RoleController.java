@@ -30,8 +30,7 @@ public class RoleController {
 	public Rest json(
 			@RequestParam(value="page",defaultValue="1") Integer page,
 			@RequestParam(value="limit",defaultValue="10") Integer size,
-			Role role
-			){
+			Role role){
 		Page<Role> pageData = roleService.page(page, size,role);
 	    return Rest.okCountData(pageData.getTotalElements(), pageData.getContent());
 	}
